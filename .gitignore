@@ -1,0 +1,11 @@
+.DS_Store
+.idea
+.project
+.classpath
+*.iml
+.vscode
+terraform.tfstate
+terraform.tfstate.*backup
+.terraform
+private_key.pem
+temp/
