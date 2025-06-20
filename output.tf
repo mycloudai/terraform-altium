@@ -40,40 +40,12 @@ output "db_private_ip" {
   value       = alicloud_instance.altium.private_ip
 }
 
-output "alicloud_images" {
-  value       = data.alicloud_images.default.images
-}
-
 output "launch_template_id" {
   value       = alicloud_ecs_launch_template.altium.id
 }
 
 output "scaling_group_id" {
   value       = alicloud_ess_scaling_group.altium.id
-}
-
-output "scale_out_rule_ari" {
-  value       = alicloud_ess_scaling_rule.scale_out.ari
-}
-
-output "scale_in_rule_ari" {
-  value       = alicloud_ess_scaling_rule.scale_in.ari
-}
-
-output "high_memory_alarm_id" {
-  value       = alicloud_ess_alarm.high_memory.id
-}
-
-output "low_memory_alarm_id" {
-  value       = alicloud_ess_alarm.low_memory.id
-}
-
-output "high_cpu_alarm_id" {
-  value       = alicloud_ess_alarm.high_cpu.id
-}
-
-output "low_cpu_alarm_id" {
-  value       = alicloud_ess_alarm.low_cpu.id
 }
 
 output "ssl_certificate_id" {
@@ -90,8 +62,4 @@ output "alb_id" {
 
 output "server_group_id" {
   value       = alicloud_alb_server_group.altium.id
-}
-
-output "https_listener_id" {
-  value       = alicloud_alb_listener.altium.id
 }
