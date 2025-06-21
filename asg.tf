@@ -37,7 +37,7 @@ resource "alicloud_ess_scaling_group" "altium" {
   default_cooldown   = 300
   vswitch_ids        = alicloud_vswitch.altium[*].id
   launch_template_id = alicloud_ecs_launch_template.altium.id
-  health_check_type  = "ECS"
+  health_check_type  = "LOAD_BALANCER"
   resource_group_id  = alicloud_resource_manager_resource_group.altium.id
 
   tags = {
@@ -49,7 +49,7 @@ resource "alicloud_ess_scaling_group" "altium" {
 
 resource "alicloud_ess_scaling_rule" "scale_out" {
   scaling_group_id  = alicloud_ess_scaling_group.altium.id
-  scaling_rule_name = "memory-scale-out"
+  scaling_rule_name = "scale-out"
   scaling_rule_type = "SimpleScalingRule"
   adjustment_type   = "QuantityChangeInCapacity"
   adjustment_value  = 1
@@ -60,7 +60,7 @@ resource "alicloud_ess_scaling_rule" "scale_out" {
 
 resource "alicloud_ess_scaling_rule" "scale_in" {
   scaling_group_id  = alicloud_ess_scaling_group.altium.id
-  scaling_rule_name = "memory-scale-in"
+  scaling_rule_name = "scale-in"
   scaling_rule_type = "SimpleScalingRule"
   adjustment_type   = "QuantityChangeInCapacity"
   adjustment_value  = -1
@@ -69,6 +69,15 @@ resource "alicloud_ess_scaling_rule" "scale_in" {
   depends_on = [alicloud_ess_scaling_group.altium]
 }
 
+# resource "alicloud_ess_lifecycle_hook" "lifecycle_hook" {
+#   name                 = "lifecycle-hook"
+#   scaling_group_id     = alicloud_ess_scaling_group.altium.id
+#   lifecycle_transition = "SCALE_IN"
+#   heartbeat_timeout    = 300
+#   default_result       = "CONTINUE"
+
+#   depends_on = [alicloud_ess_scaling_group.altium]
+# }
 
 resource "alicloud_ess_alarm" "high_memory" {
   name                = "high-memory-alarm"
